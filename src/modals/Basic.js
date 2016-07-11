@@ -5,7 +5,7 @@ import cx from 'classnames';
 import Card from '../cards/Card';
 import styles from './styles.scss';
 
-const BasicModal = ({ title, size, children }, { onToggleModal }) => (
+const BasicModal = ({ title, size, children }, { onCloseModal }) => (
   <Motion
     defaultStyle={{ translateY: -30 }}
     style={{ translateY: spring(0) }}
@@ -18,7 +18,7 @@ const BasicModal = ({ title, size, children }, { onToggleModal }) => (
         <Card>
           <div className={styles.header}>
             {title}
-            <span className={styles.close} onClick={onToggleModal}>
+            <span className={styles.close} onClick={onCloseModal}>
               <Icon name="times" />
             </span>
           </div>
@@ -42,7 +42,7 @@ BasicModal.defaultProps = {
 };
 
 BasicModal.contextTypes = {
-  onToggleModal: PropTypes.func,
+  onCloseModal: PropTypes.func,
 };
 
 export default BasicModal;

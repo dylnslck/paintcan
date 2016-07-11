@@ -12,7 +12,7 @@ class Modal extends Component {
   }
 
   getChildContext() {
-    return { onToggleModal: this.closeModal };
+    return { onCloseModal: this.closeModal };
   }
 
   openModal() {
@@ -50,7 +50,7 @@ class Modal extends Component {
 }
 
 Modal.childContextTypes = {
-  onToggleModal: PropTypes.func,
+  onCloseModal: PropTypes.func,
 };
 
 Modal.propTypes = {

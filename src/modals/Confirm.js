@@ -12,7 +12,7 @@ class ConfirmModal extends Component {
   }
 
   static contextTypes = {
-    onToggleModal: PropTypes.func,
+    onCloseModal: PropTypes.func,
   }
 
   static defaultProps = {
@@ -29,12 +29,12 @@ class ConfirmModal extends Component {
 
   handleConfirm() {
     const { onConfirm } = this.props;
-    const { onToggleModal } = this.context;
+    const { onCloseModal } = this.context;
 
     this.setState({ isConfirming: true });
     onConfirm().then(() => {
       this.setState({ isConfirming: false });
-      onToggleModal();
+      onCloseModal();
     });
   }
 
@@ -51,14 +51,14 @@ class ConfirmModal extends Component {
 
   render() {
     const { title, cancelText } = this.props;
-    const { onToggleModal } = this.context;
+    const { onCloseModal } = this.context;
 
     return (
       <div className={styles.confirm}>
         <h3>{title}</h3>
         <ButtonGroup spaced>
           {this.renderConfirmButton()}
-          <Button color="danger" onClick={onToggleModal}>{cancelText}</Button>
+          <Button color="danger" onClick={onCloseModal}>{cancelText}</Button>
         </ButtonGroup>
       </div>
     );

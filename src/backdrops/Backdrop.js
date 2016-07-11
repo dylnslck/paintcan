@@ -4,8 +4,9 @@ import styles from './styles.scss';
 
 const BackdropTransition = ({ children: child }) => {
   const willEnter = () => ({ opacity: 0 });
-  const willLeave = () => ({ opacity: spring(0) });
-  const getStyles = () => ({ opacity: spring(1) });
+  // FIXME: add some damping and stifness presets
+  const willLeave = () => ({ opacity: spring(0, { stiffness: 700, damping: 50 }) });
+  const getStyles = () => ({ opacity: spring(1, { stiffness: 200, damping: 20 }) });
   const transitionStyles = child ? [{ key: 'modal', style: getStyles(), data: child }] : [];
 
   return (

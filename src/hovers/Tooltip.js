@@ -58,7 +58,7 @@ class Tooltip extends Component {
     return (
       <Motion
         defaultStyle={{ opacity: 0.4, translateY: 4 }}
-        style={{ opacity: spring(1.0, [80, 11]), translateY: spring(0) }}
+        style={{ opacity: spring(1.0), translateY: spring(0, { stiffness: 200, damping: 10 }) }}
       >
         {interpolated => getContent(interpolated)}
       </Motion>
