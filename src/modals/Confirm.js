@@ -1,0 +1,68 @@
+import React, { Component, PropTypes } from 'react';
+import { Button, ButtonGroup } from '../buttons';
+import styles from './styles.scss';
+
+class ConfirmModal extends Component {
+  static propTypes = {
+    title: PropTypes.string,
+    confirmText: PropTypes.string,
+    cancelText: PropTypes.string,
+    onConfirm: PropTypes.func,
+    onCancel: PropTypes.func,
+  }
+
+  static contextTypes = {
+    onToggleModal: PropTypes.func,
+  }
+
+  static defaultProps = {
+    confirmText: 'Yes',
+    cancelText: 'No',
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.state = { isConfirming: false };
+    this.handleConfirm = this.handleConfirm.bind(this);
+  }
+
+  handleConfirm() {
+    const { onConfirm } = this.props;
+    const { onToggleModal } = this.context;
+
+    this.setState({ isConfirming: true });
+    onConfirm().then(() => {
+      this.setState({ isConfirming: false });
+      onToggleModal();
+    });
+  }
+
+  renderConfirmButton() {
+    const { confirmText } = this.props;
+    const { isConfirming } = this.state;
+    const color = 'success';
+
+    const loadingButton = <Button color={color} loading>{confirmText}</Button>;
+    const normalButton = <Button color={color} onClick={this.handleConfirm}>{confirmText}</Button>;
+
+    return isConfirming ? loadingButton : normalButton;
+  }
+
+  render() {
+    const { title, cancelText } = this.props;
+    const { onToggleModal } = this.context;
+
+    return (
+      <div className={styles.confirm}>
+        <h3>{title}</h3>
+        <ButtonGroup spaced>
+          {this.renderConfirmButton()}
+          <Button color="danger" onClick={onToggleModal}>{cancelText}</Button>
+        </ButtonGroup>
+      </div>
+    );
+  }
+}
+
+export default ConfirmModal;

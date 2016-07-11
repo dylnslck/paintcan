@@ -1,0 +1,39 @@
+@import "../styles/colors";
+
+.basic {
+  margin: 2rem auto;
+  color: $dark; // TODO should be set globally
+
+  &.xs { max-width: 200px; }
+  &.sm { max-width: 400px; }
+  &.md { max-width: 600px; }
+  &.lg { max-width: 800px; }
+}
+
+.confirm {
+  composes: basic;
+  color: #FFF;
+  max-width: 400px;
+  margin-top: 4rem;
+  text-align: center;
+}
+
+.header {
+  margin: -1rem -1rem 0 -1rem;
+  padding: 1rem;
+  font-size: 1.5rem;
+  display: flex;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+
+  .close {
+    align-self: center;
+    margin-left: auto;
+    font-size: 1rem;
+    color: transparentize($dark, 0.6);
+    cursor: pointer;
+
+    &:hover {
+      color: transparentize($dark, 0.4);
+    }
+  }
+}

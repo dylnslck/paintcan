@@ -1,0 +1,91 @@
+@mixin loaders($track, $spinner) {
+  &.loading:before {
+    position: absolute;
+    content: '';
+    top: 50%;
+    left: 50%;
+    margin-left: -11px; // TODO calculate
+    margin-top: -11px; // TODO calculate
+    width: 1rem;
+    height: 1rem;
+    border-radius: 500rem;
+    border: .2em solid $track;
+  }
+
+  &.loading:after {
+    animation: spin .6s linear;
+    animation-iteration-count: infinite;
+    border-radius: 500rem;
+    border-color: $spinner transparent transparent;
+    border-style: solid;
+    border-width: .2em;
+    box-shadow: 0 0 0 1px transparent;
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -11px; // TODO calculate
+    margin-top: -11px; // TODO calculate
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+@mixin button-outline($color: #333) {
+  background-color: transparent;
+  border-width: 1px;
+  border-color: $color;
+  border-style: solid;
+  color: $color;
+
+  &:disabled {
+    border-color: lighten($color, 20%);
+    color: lighten($color, 20%);
+  }
+
+  &:not([disabled]):hover {
+    border-color: darken($color, 15%);
+    color: darken($color, 15%);
+  }
+
+  &:not([disabled]):active {
+    border-color: darken($color, 25%);
+    color: darken($color, 25%);
+  }
+
+  $track: transparentize($color, 0.85);
+  $spinner: $color;
+
+  @include loaders($track, $spinner);
+}
+
+@mixin button-solid($background: #ccc, $text: #333) {
+  $first: $background;
+  $second: darken($background, 3%);
+
+  color: $text;
+  background: linear-gradient(-180deg, $first 0%, $second 100%);
+  border-width: 0;
+  border-style: none;
+
+  &:disabled {
+    background: lighten($background, 20%);
+  }
+
+  &:not([disabled]):hover {
+    background: linear-gradient(
+      -180deg, darken($first, 5%) 0%, darken($second, 5%) 100%
+    );
+  }
+
+  &:not([disabled]):active {
+    background: linear-gradient(
+      -180deg, darken($first, 10%) 0%, darken($second, 10%) 100%
+    );
+  }
+
+  $track: transparentize(black, 0.85);
+  $spinner: white;
+
+  @include loaders($track, $spinner);
+}

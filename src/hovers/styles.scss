@@ -1,0 +1,14 @@
+@import "../styles/colors";
+
+$border-radius: 0.25em;
+$tooltip-margin: 2px;
+
+.tooltip {
+  position: relative;
+  border-radius: $border-radius;
+  background: $dark;
+  color: #FFF;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  z-index: 1100;
+}
