@@ -1,9 +1,9 @@
 import React from 'react';
 import { Icon } from 'react-fa';
-import { Button, ButtonGroup } from './buttons';
+import { Button, ButtonGroup } from '../../src/buttons';
 
 const ButtonDemo = () => (
-  <div style={{ padding: '2rem' }}>
+  <div className="pa-3">
     <h1>Buttons</h1>
     <p>Solid buttons</p>
     <pre>const Button = &lt;Button color="secondary"&gt;Button&lt;/Button&gt;</pre>

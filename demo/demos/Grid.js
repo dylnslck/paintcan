@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-alert */
 import React from 'react';
-import { Row, Container, Col, Layout } from './grid';
+import { Row, Container, Col, Layout } from '../../src/grid';
 
 const GridDemo = () => (
   <div>

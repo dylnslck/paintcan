@@ -1,15 +1,14 @@
 {
   "name": "sandbox",
   "version": "0.0.1",
-  "description": "Stuff.",
-  "main": "index.js",
+  "description": "Minimal React UI framework.",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --hot"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dylnslck/sandbox.git"
+    "url": "git+https://github.com/dylnslck/paintcan.git"
   },
   "author": "Dylan Slack <dylanslack@gmail.com> (http://www.dylanslack.me)",
   "license": "ISC",
@@ -23,7 +22,6 @@
     "flexboxgrid": "^6.3.0",
     "normalize.css": "^4.2.0",
     "react": "^15.2.0",
-    "react-addons-css-transition-group": "^15.2.1",
     "react-dom": "^15.2.0",
     "react-fa": "^4.1.2",
     "react-motion": "^0.4.4",

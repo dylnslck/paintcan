@@ -1,8 +1,8 @@
 /* eslint-disable no-alert */
 import React from 'react';
-import Button from './buttons/Button';
-import { Dropdown, Popover, Tooltip } from './tethers';
-import { Content, Trigger } from './utils';
+import Button from '../../src/buttons/Button';
+import { Dropdown, Popover, Tooltip } from '../../src/tethers';
+import { Content, Trigger } from '../../src/utils';
 
 const TethersDemo = () => (
   <div style={{ padding: '2rem' }}>

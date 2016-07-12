@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from './cards/index'; // index? WTF?
+import { Card } from '../../src/cards';
 
 const CardDemo = () => (
   <div style={{ padding: '2rem' }}>

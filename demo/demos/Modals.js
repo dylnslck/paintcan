@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
 import React from 'react';
-import { Button } from './buttons';
-import { Tooltip } from './tethers';
-import { BasicModal, ConfirmModal, Modal } from './modals';
+import { Button } from '../../src/buttons';
+import { Tooltip } from '../../src/tethers';
+import { BasicModal, ConfirmModal, Modal } from '../../src/modals';
 
 const onConfirm = () => new Promise(resolve => setTimeout(resolve, 1000));
 

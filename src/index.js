@@ -1,8 +1,10 @@
-import React from 'react';
-import { render } from 'react-dom';
-import Root from './Root';
+import 'normalize.css';
+import './styles/index.scss';
 
-render(
-  <Root />,
-  document.getElementById('root'),
-);
+export { Backdrop } from './backdrops';
+export { Button, ButtonGroup } from './buttons';
+export { Card } from './cards';
+export { Col, Container, Layout, Row } from './grid';
+export { BasicModal, ConfirmModal, Modal } from './modals';
+export { Dropdown, Popover, Tooltip } from './tethers';
+export { Content, Trigger } from './utils';

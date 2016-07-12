@@ -1,0 +1,37 @@
+:global {
+  @for $i from 0 through 6 {
+    .ml-#{$i} { margin-left: 1rem * $i !important; }
+    .mr-#{$i} { margin-right: 1rem * $i !important; }
+    .mt-#{$i} { margin-top: 1rem * $i !important; }
+    .mb-#{$i} { margin-bottom: 1rem * $i !important; }
+    .ma-#{$i} { margin: 1rem * $i !important; }
+
+    .my-#{$i} {
+      margin-bottom: 1rem * $i !important;
+      margin-top: 1rem * $i !important;
+    }
+
+    .mx-#{$i} {
+      margin-left: 1rem * $i !important;
+      margin-right: 1rem * $i !important;
+    }
+  }
+
+  @for $i from 0 through 6 {
+    .pl-#{$i} { padding-left: 1rem * $i !important; }
+    .pr-#{$i} { padding-right: 1rem * $i !important; }
+    .pt-#{$i} { padding-top: 1rem * $i !important; }
+    .pb-#{$i} { padding-bottom: 1rem * $i !important; }
+    .pa-#{$i} { padding: 1rem * $i !important; }
+
+    .py-#{$i} {
+      padding-bottom: 1rem * $i !important;
+      padding-top: 1rem * $i !important;
+    }
+
+    .px-#{$i} {
+      padding-left: 1rem * $i !important;
+      padding-right: 1rem * $i !important;
+    }
+  }
+}
