@@ -6,6 +6,7 @@ import CardDemo from './CardDemo';
 import ModalDemo from './ModalDemo';
 import HoversDemo from './HoversDemo';
 import DropdownDemo from './DropdownDemo';
+import GridDemo from './GridDemo';
 
 export default () => (
   <div>
@@ -14,5 +15,6 @@ export default () => (
     <ModalDemo />
     <HoversDemo />
     <DropdownDemo />
+    <GridDemo />
   </div>
 );
