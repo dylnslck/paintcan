@@ -26,6 +26,13 @@ const ButtonDemo = () => (
     <Button color="success" disabled>Success</Button>
     <Button color="danger" disabled>Danger</Button>
     <Button disabled>Default</Button>
+    <p>Active buttons</p>
+    <pre>const Button = &lt;Button color="secondary" active&gt;Button&lt;/Button&gt;</pre>
+    <Button color="secondary" active>Secondary</Button>
+    <Button color="primary" active>Primary</Button>
+    <Button color="success" active>Success</Button>
+    <Button color="danger" active>Danger</Button>
+    <Button active>Default</Button>
     <p>Loading buttons</p>
     <pre>const Button = &lt;Button color="secondary" loading&gt;Button&lt;/Button&gt;</pre>
     <Button color="secondary" loading>Secondary</Button>

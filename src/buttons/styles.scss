@@ -64,6 +64,10 @@ $button-height: 1em + (2 * $padding-y);
 .secondary {
   composes: btn;
   @include button-solid($lighter, $dark);
+
+  &.active {
+    @include button-solid(darken($lighter, 10%), $dark);
+  }
 }
 
 .secondary-outline {
@@ -74,6 +78,10 @@ $button-height: 1em + (2 * $padding-y);
 .primary {
   composes: btn;
   @include button-solid($blue, #FFF);
+
+  &.active {
+    @include button-solid(darken($blue, 10%), $dark);
+  }
 }
 
 .primary-outline {
@@ -84,6 +92,10 @@ $button-height: 1em + (2 * $padding-y);
 .success {
   composes: btn;
   @include button-solid($green, #FFF);
+
+  &.active {
+    @include button-solid(darken($green, 10%), $dark);
+  }
 }
 
 .success-outline {
@@ -94,6 +106,10 @@ $button-height: 1em + (2 * $padding-y);
 .danger {
   composes: btn;
   @include button-solid($red, #FFF);
+
+  &.active {
+    @include button-solid(darken($red, 10%), $dark);
+  }
 }
 
 .danger-outline {
@@ -104,6 +120,10 @@ $button-height: 1em + (2 * $padding-y);
 .white {
   composes: btn;
   @include button-solid(#FFF, $dark);
+
+  &.active {
+    @include button-solid(darken(#FFF, 10%), $dark);
+  }
 }
 
 .white-outline {

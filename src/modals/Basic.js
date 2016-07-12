@@ -7,13 +7,15 @@ import styles from './styles.scss';
 
 const BasicModal = ({ title, size, children }, { onCloseModal }) => (
   <Motion
-    defaultStyle={{ translateY: -30 }}
-    style={{ translateY: spring(0) }}
+    defaultStyle={{ translateY: -30, scale: 1.02 }}
+    style={{ translateY: spring(0), scale: spring(1) }}
   >
     {interpolated =>
       <div
         className={cx(styles.basic, styles[size])}
-        style={{ transform: `translateY(${interpolated.translateY}px)` }}
+        style={{
+          transform: `translateY(${interpolated.translateY}px) scale(${interpolated.scale})`,
+        }}
       >
         <Card>
           <div className={styles.header}>

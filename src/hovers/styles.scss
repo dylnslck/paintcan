@@ -6,9 +6,20 @@ $tooltip-margin: 2px;
 .tooltip {
   position: relative;
   border-radius: $border-radius;
+  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.20); // TODO make global somewhere
   background: $dark;
   color: #FFF;
   padding: 0.5rem;
   font-size: 0.8rem;
+  z-index: 1100;
+}
+
+.popover {
+  color: $dark;
+  position: relative;
+  border-radius: $border-radius;
+  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.20); // TODO make global somewhere
+  background: white;
+  padding: 1rem;
   z-index: 1100;
 }

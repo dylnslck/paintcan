@@ -1,7 +1,48 @@
 import React, { Component, PropTypes, cloneElement } from 'react';
-import { Motion, spring } from 'react-motion';
+import { TransitionMotion, spring } from 'react-motion';
 import TetherComponent from 'react-tether';
 import styles from './styles.scss';
+
+const TooltipTransition = ({ children: child }) => {
+  // FIXME: add some damping and stifness presets
+  // FIXME: hovering over popover then immediately going to tooltip doesn't render on first try
+  const gentleBounce = { stiffness: 200, damping: 10 };
+  const willEnter = () => ({ opacity: 0, translateY: 4 });
+  const willLeave = () => ({ opacity: spring(0), translateY: spring(4, gentleBounce) });
+  const getStyles = () => ({ opacity: spring(1), translateY: spring(0, gentleBounce) });
+
+  const defaultStyles = [{ key: 'tooltip', style: { opacity: 0, translateY: 0 }, data: child }];
+  const transitionStyles = child ? [{ key: 'tooltip', style: getStyles(), data: child }] : [];
+
+  return (
+    <TransitionMotion
+      defaultStyles={defaultStyles}
+      willEnter={willEnter}
+      willLeave={willLeave}
+      styles={transitionStyles}
+    >
+      {interpolated =>
+        <span>
+          {interpolated.map(({ key, style, data }) => {
+            const props = {
+              key,
+              style: {
+                opacity: style.opacity,
+                transform: `translateY(${style.translateY}px)`,
+              },
+            };
+
+            return data ? cloneElement(data, props) : null;
+          })}
+        </span>
+      }
+    </TransitionMotion>
+  );
+};
+
+TooltipTransition.propTypes = {
+  children: PropTypes.any, // FIXME: proper validation
+};
 
 class Tooltip extends Component {
   static propTypes = {
@@ -35,9 +76,13 @@ class Tooltip extends Component {
   renderTarget() {
     const { children } = this.props;
 
+    // adding a little delay gets rid of some small glitches
+    const handleMouseEnter = () => setTimeout(this.showTooltip, 50);
+    const handleMouseLeave = this.hideTooltip;
+
     return cloneElement(children, {
-      onMouseEnter: this.showTooltip,
-      onMouseLeave: this.hideTooltip,
+      onMouseEnter: handleMouseEnter,
+      onMouseLeave: handleMouseLeave,
     });
   }
 
@@ -45,23 +90,14 @@ class Tooltip extends Component {
     const { text } = this.props;
     const { isOpen } = this.state;
 
-    if (!isOpen) return '';
-
-    const tooltip = <div className={styles.tooltip}>{text}</div>;
-
-    const getContent = ({ opacity, translateY }) => {
-      const style = { opacity, transform: `translateY(${translateY}px)` };
-
-      return cloneElement(tooltip, { style });
-    };
+    const handleMouseLeave = this.handleMouseLeave;
 
     return (
-      <Motion
-        defaultStyle={{ opacity: 0.4, translateY: 4 }}
-        style={{ opacity: spring(1.0), translateY: spring(0, { stiffness: 200, damping: 10 }) }}
-      >
-        {interpolated => getContent(interpolated)}
-      </Motion>
+      <TooltipTransition>
+        {isOpen
+          ? <div className={styles.tooltip} onMouseLeave={handleMouseLeave}>{text}</div>
+          : null}
+      </TooltipTransition>
     );
   }
 
@@ -72,7 +108,6 @@ class Tooltip extends Component {
       <TetherComponent
         attachment={attachment}
         offset={offset}
-        key="1"
       >
         {this.renderTarget()}
         {this.renderTooltip()}

@@ -8,6 +8,7 @@ const Button = ({
   circle,
   loading,
   disabled,
+  active,
   block,
   size,
   icon,
@@ -27,6 +28,7 @@ const Button = ({
     className: cx(base, styles[size], {
       [styles.circle]: circle,
       [styles.loading]: loading,
+      [styles.active]: active,
       [styles.block]: block,
     }),
   };
@@ -50,6 +52,7 @@ Button.propTypes = {
   circle: PropTypes.bool,
   loading: PropTypes.bool,
   disabled: PropTypes.bool,
+  active: PropTypes.bool,
   block: PropTypes.bool,
   size: PropTypes.string,
   icon: PropTypes.any, // TODO: add validation
@@ -64,6 +67,7 @@ Button.defaultProps = {
   circle: false,
   loading: false,
   disabled: false,
+  active: false,
   block: false,
   size: 'md',
   tag: 'button',

@@ -43,12 +43,12 @@
     color: lighten($color, 20%);
   }
 
-  &:not([disabled]):hover {
+  &:not(.active):not([disabled]):hover {
     border-color: darken($color, 15%);
     color: darken($color, 15%);
   }
 
-  &:not([disabled]):active {
+  &:not(.active):not([disabled]):active {
     border-color: darken($color, 25%);
     color: darken($color, 25%);
   }
@@ -72,13 +72,13 @@
     background: lighten($background, 20%);
   }
 
-  &:not([disabled]):hover {
+  &:not(.active):not([disabled]):hover {
     background: linear-gradient(
       -180deg, darken($first, 5%) 0%, darken($second, 5%) 100%
     );
   }
 
-  &:not([disabled]):active {
+  &:not(.active):not([disabled]):active {
     background: linear-gradient(
       -180deg, darken($first, 10%) 0%, darken($second, 10%) 100%
     );

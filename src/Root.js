@@ -5,6 +5,7 @@ import ButtonDemo from './ButtonDemo';
 import CardDemo from './CardDemo';
 import ModalDemo from './ModalDemo';
 import HoversDemo from './HoversDemo';
+import DropdownDemo from './DropdownDemo';
 
 export default () => (
   <div>
@@ -12,5 +13,6 @@ export default () => (
     <CardDemo />
     <ModalDemo />
     <HoversDemo />
+    <DropdownDemo />
   </div>
 );

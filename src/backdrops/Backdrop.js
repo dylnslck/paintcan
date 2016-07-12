@@ -1,5 +1,6 @@
 import React, { PropTypes, cloneElement } from 'react';
 import { TransitionMotion, spring } from 'react-motion';
+import cx from 'classnames';
 import styles from './styles.scss';
 
 const BackdropTransition = ({ children: child }) => {
@@ -27,14 +28,24 @@ const BackdropTransition = ({ children: child }) => {
   );
 };
 
-const Backdrop = ({ active, onClick, children }) => (
-  <BackdropTransition>
-    {active
-      ? <div className={styles.backdrop} onClick={onClick}>{children}</div>
-      : null
-    }
-  </BackdropTransition>
-);
+const Backdrop = ({ active, transparent, onClick, children }) => {
+  const backdrop = (
+    <div
+      onClick={onClick}
+      className={cx(
+        styles.backdrop, { [styles.transparent]: transparent }
+      )}
+    >
+      {children}
+    </div>
+  );
+
+  return (
+    <BackdropTransition>
+      {active ? backdrop : null}
+    </BackdropTransition>
+  );
+};
 
 BackdropTransition.propTypes = {
   children: PropTypes.any,
@@ -42,6 +53,7 @@ BackdropTransition.propTypes = {
 
 Backdrop.propTypes = {
   active: PropTypes.bool,
+  transparent: PropTypes.bool,
   onClick: PropTypes.func,
   children: PropTypes.any,
 };

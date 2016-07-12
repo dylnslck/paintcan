@@ -8,3 +8,8 @@
   overflow-y: auto;
   background: transparentize(black, 0.4);
 }
+
+.transparent {
+  composes: backdrop;
+  background: transparent;
+}
