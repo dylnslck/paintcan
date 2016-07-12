@@ -9,18 +9,8 @@ const Row = ({
   distribute,
   children,
 }) => {
-  const mapAlignmentsToClassNames = () =>
-    Object.keys(align).map(alignment =>
-      align[alignment].split(' ').map(a =>
-        `${a}-${alignment}`).join(' '));
-
-  /*
-  {
-    align: {
-      xs: 'center middle',
-    }
-  }
-  */
+  const mapAlignmentsToClassNames = () => Object.keys(align).map(alignment =>
+    align[alignment].split(' ').map(a => `${a}-${alignment}`).join(' '));
 
   const mapDistributionsToClassNames = () =>
     Object.keys(distribute).map(distribution =>
@@ -48,7 +38,7 @@ Row.propTypes = {
   reverse: PropTypes.bool,
   align: PropTypes.object,
   distribute: PropTypes.object,
-  children: PropTypes.any, // TODO: prop validation (only col?)
+  children: PropTypes.any,
 };
 
 Row.defaultProps = {

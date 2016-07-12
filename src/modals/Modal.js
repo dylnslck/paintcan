@@ -1,5 +1,5 @@
 import React, { Component, PropTypes, cloneElement } from 'react';
-import Backdrop from '../../backdrops/Backdrop';
+import { Backdrop } from '../backdrops';
 
 class Modal extends Component {
   constructor(props) {
@@ -29,6 +29,7 @@ class Modal extends Component {
     e.persist();
 
     // FIXME: this is pretty frail
+    // TODO: add ref
     return e.target.className.indexOf('backdrop') >= 0
       ? this.closeModal()
       : null;

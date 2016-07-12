@@ -6,7 +6,6 @@ $border-radius: 0.25em;
 $line-height: 1rem;
 $padding-y: 0.5em;
 $padding-x: 0.75em;
-
 $button-height: 1em + (2 * $padding-y);
 
 .btn {
@@ -18,20 +17,12 @@ $button-height: 1em + (2 * $padding-y);
   padding: $padding-y $padding-x;
   position: relative;
 
-  .icon {
-    margin-right: 0.375em;
-  }
+  // child components
+  .children { visibility: visible; }
+  .icon { margin-right: 0.375em; }
 
-  .children {
-    visibility: visible;
-  }
-
-  &:disabled {
-    cursor: default;
-  }
-
+  // modifiers
   &.circle {
-    // TODO: calculate height and divide by two
     border-radius: $button-height / 2;
     height: $button-height;
     width: $button-height;
@@ -46,7 +37,7 @@ $button-height: 1em + (2 * $padding-y);
   &.block {
     display: block;
     text-align: center;
-    width: 100%; // FIXME: why is this necessary?
+    width: 100%;
   }
 
   &.xs { font-size: 0.6rem; }
@@ -55,10 +46,13 @@ $button-height: 1em + (2 * $padding-y);
   &.lg { font-size: 1.2rem; }
   &.xl { font-size: 1.4rem; }
 
+  // states
   &.loading {
     .loader { visibility: visible; }
     .children { visibility: hidden; }
   }
+
+  &:disabled { cursor: default; }
 }
 
 .secondary {
@@ -80,7 +74,7 @@ $button-height: 1em + (2 * $padding-y);
   @include button-solid($blue, #FFF);
 
   &.active {
-    @include button-solid(darken($blue, 10%), $dark);
+    @include button-solid(darken($blue, 10%), #FFF);
   }
 }
 
@@ -94,7 +88,7 @@ $button-height: 1em + (2 * $padding-y);
   @include button-solid($green, #FFF);
 
   &.active {
-    @include button-solid(darken($green, 10%), $dark);
+    @include button-solid(darken($green, 10%), #FFF);
   }
 }
 
@@ -108,7 +102,7 @@ $button-height: 1em + (2 * $padding-y);
   @include button-solid($red, #FFF);
 
   &.active {
-    @include button-solid(darken($red, 10%), $dark);
+    @include button-solid(darken($red, 10%), #FFF);
   }
 }
 

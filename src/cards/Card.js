@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-import styles from './styles.scss';
 import cx from 'classnames';
+import styles from './styles.scss';
 
 const Card = ({ children, className }) => (
   <div className={cx(styles.card, className)}>

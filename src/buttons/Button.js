@@ -35,10 +35,7 @@ const Button = ({
 
   const renderChildren = () => (
     <span className={styles.children}>
-      {
-        // only apply icon class if there are children
-        icon ? cloneElement(icon, { className: children && styles.icon }) : ''
-      }
+      {icon ? cloneElement(icon, { className: children && styles.icon }) : ''}
       {children}
     </span>
   );
@@ -57,7 +54,7 @@ Button.propTypes = {
   size: PropTypes.string,
   icon: PropTypes.any, // TODO: add validation
   tag: PropTypes.string,
-  children: PropTypes.any, // TODO: add validation
+  children: PropTypes.any,
   onClick: PropTypes.func,
 };
 

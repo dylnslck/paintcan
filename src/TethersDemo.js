@@ -1,12 +1,10 @@
-/* eslint-disable max-len */
 /* eslint-disable no-alert */
 import React from 'react';
 import Button from './buttons/Button';
-import Tooltip from './hovers/Tooltip';
-import Popover from './hovers/Popover';
-import { Trigger, Content } from './utils';
+import { Dropdown, Popover, Tooltip } from './tethers';
+import { Content, Trigger } from './utils';
 
-const HoversDemo = () => (
+const TethersDemo = () => (
   <div style={{ padding: '2rem' }}>
     <h1>Hovers</h1>
     <Tooltip text="A tooltip man!" attachment="bottom center">
@@ -21,7 +19,16 @@ const HoversDemo = () => (
         <Button color="primary" onClick={() => alert('hello!')}>Click me</Button>
       </Content>
     </Popover>
+    <Dropdown>
+      <Trigger>
+        <Button>Dropdown</Button>
+      </Trigger>
+      <Content>
+        <p>I am a dropdown yo</p>
+        <Button color="primary" onClick={() => alert('hello!')}>Click me</Button>
+      </Content>
+    </Dropdown>
   </div>
 );
 
-export default HoversDemo;
+export default TethersDemo;

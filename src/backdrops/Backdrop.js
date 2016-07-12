@@ -3,6 +3,39 @@ import { TransitionMotion, spring } from 'react-motion';
 import cx from 'classnames';
 import styles from './styles.scss';
 
+
+const TransitionChild = ({
+  enter,
+  leave,
+  styles,
+  key,
+  mapStyle,
+  children: child
+}) => {
+  const willEnter = () => enter;
+  const willLeave = () => leave;
+  const getStyles = () => styles;
+  const transitionStyles = child ? [{ key: key, style: getStyles(), data: child }] : [];
+
+  return (
+    <TransitionMotion
+      willEnter={willEnter}
+      willLeave={willLeave}
+      styles={transitionStyles}
+    >
+      {interpolated =>
+        // FIXME: So hacky
+        <span style={{ position: 'absolute', zIndex: 900 }}>
+          {interpolated.map(({ key, style, data }) =>
+            cloneElement(data, { key, style: mapStyle(style) })
+          )}
+        </span>
+      }
+    </TransitionMotion>
+  );
+}
+
+
 const BackdropTransition = ({ children: child }) => {
   const willEnter = () => ({ opacity: 0 });
   // FIXME: add some damping and stifness presets

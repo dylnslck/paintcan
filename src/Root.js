@@ -4,8 +4,7 @@ import React from 'react';
 import ButtonDemo from './ButtonDemo';
 import CardDemo from './CardDemo';
 import ModalDemo from './ModalDemo';
-import HoversDemo from './HoversDemo';
-import DropdownDemo from './DropdownDemo';
+import TethersDemo from './TethersDemo';
 import GridDemo from './GridDemo';
 
 export default () => (
@@ -13,8 +12,7 @@ export default () => (
     <ButtonDemo />
     <CardDemo />
     <ModalDemo />
-    <HoversDemo />
-    <DropdownDemo />
+    <TethersDemo />
     <GridDemo />
   </div>
 );
