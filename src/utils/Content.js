@@ -1,9 +1,17 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
-const Content = ({ children }) => <span>{children}</span>;
+class Content extends Component {
+  static propTypes = {
+    children: PropTypes.any, // TODO: proper validation (single element)
+  }
 
-Content.propTypes = {
-  children: PropTypes.any,
-};
+  render() {
+    const { children } = this.props;
+
+    return Array.isArray(children)
+      ? <div>{children}</div>
+      : children;
+  }
+}
 
 export default Content;

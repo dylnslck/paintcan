@@ -76,33 +76,29 @@ class Dropdown extends Component {
   setupTriggerAndContent() {
     const { children } = this.props;
 
-    Children.forEach(children, child => {
-      const handleRef = (key) => (ref) => {
-        this[key] = ref;
-      };
+    const createRef = (key) => (ref) => {
+      this[key] = findDOMNode(ref);
+    };
 
+    Children.forEach(children, child => {
       if (child.type === Trigger) {
-        this.trigger = (
-          <div ref={handleRef('triggerNode')} style={{ display: 'inline-block' }}>
-            {child.props.children}
-          </div>
-        );
+        this.trigger = cloneElement(child, {
+          ref: createRef('triggerNode'),
+          onClick: this.toggleDropdown,
+        });
       }
 
       if (child.type === Content) {
-        this.content = (
-          <div ref={handleRef('contentNode')}>
-            {child}
-          </div>
-        );
+        this.content = cloneElement(child, {
+          ref: createRef('contentNode'),
+        });
       }
     });
   }
 
   handleDocumentClick(e) {
     const { target } = e;
-    const content = findDOMNode(this.contentNode);
-    const trigger = findDOMNode(this.triggerNode);
+    const { contentNode: content, triggerNode: trigger } = this;
 
     // ref hasn't completed firing due to the animation
     if (!content) return;
@@ -117,6 +113,7 @@ class Dropdown extends Component {
     if (shouldHideDropdown) this.hideDropdown();
   }
 
+  // TODO: keep state method names similar -- open vs. show, etc
   showDropdown() {
     this.setState({ isOpen: true });
   }
@@ -135,7 +132,7 @@ class Dropdown extends Component {
     return cloneElement(this.trigger, { onClick: this.toggleDropdown });
   }
 
-  renderDropdown() {
+  renderContent() {
     const { isOpen } = this.state;
     const content = this.content;
 
@@ -155,8 +152,8 @@ class Dropdown extends Component {
         targetAttachment={targetAttachment}
         offset={offset}
       >
-        {this.renderTrigger()}
-        {this.renderDropdown()}
+        {this.trigger}
+        {this.renderContent()}
       </TetherComponent>
     );
   }

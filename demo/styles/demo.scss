@@ -1,11 +1,22 @@
-@import url("https://fonts.googleapis.com/css?family=Lato:300,400,900");
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,900');
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower');
 
 :global {
   body {
+    color: #32384A;
     font-family: 'Lato', sans-serif;
   }
 
-  h1, h2, h3, h4 {
+  h1 {
+    font-family: 'Indie Flower', cursive;
     font-weight: 300;
+  }
+
+  hr {
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  pre {
+    margin: 0;
   }
 }

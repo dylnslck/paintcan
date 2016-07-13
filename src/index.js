@@ -1,5 +1,4 @@
 import 'normalize.css';
-import './styles/index.scss';
 
 export { Backdrop } from './backdrops';
 export { Button, ButtonGroup } from './buttons';

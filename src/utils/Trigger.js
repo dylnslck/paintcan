@@ -1,9 +1,16 @@
-import React, { PropTypes } from 'react';
+import { Component, PropTypes, cloneElement } from 'react';
 
-const Target = ({ children }) => <span>{children}</span>;
+class Trigger extends Component {
+  static propTypes = {
+    children: PropTypes.any, // TODO: proper validation (single element)
+    onClick: PropTypes.func,
+  }
 
-Target.propTypes = {
-  children: PropTypes.any,
-};
+  render() {
+    const { children, ...options } = this.props;
 
-export default Target;
+    return cloneElement(children, { ...options });
+  }
+}
+
+export default Trigger;

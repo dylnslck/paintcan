@@ -8,15 +8,18 @@ const Row = ({
   align,
   distribute,
   children,
+  className,
 }) => {
-  const mapAlignmentsToClassNames = () => Object.keys(align).map(alignment =>
-    align[alignment].split(' ').map(a => `${a}-${alignment}`).join(' '));
+  const mapAlignmentsToClassNames = () =>
+    Object.keys(align).map(alignment =>
+      align[alignment].split(' ').map(a => `${a}-${alignment}`).join(' '));
 
   const mapDistributionsToClassNames = () =>
     Object.keys(distribute).map(distribution =>
       `${distribute[distribution]}-${distribution}`);
 
   const classNames = cx(
+    className,
     mapAlignmentsToClassNames(),
     mapDistributionsToClassNames(),
     'row',
@@ -38,6 +41,7 @@ Row.propTypes = {
   reverse: PropTypes.bool,
   align: PropTypes.object,
   distribute: PropTypes.object,
+  className: PropTypes.string,
   children: PropTypes.any,
 };
 
