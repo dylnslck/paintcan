@@ -129,7 +129,9 @@ class Dropdown extends Component {
   }
 
   renderTrigger() {
-    return cloneElement(this.trigger, { onClick: this.toggleDropdown });
+    return cloneElement(this.trigger, {
+      active: this.state.isOpen,
+    });
   }
 
   renderContent() {
@@ -152,7 +154,7 @@ class Dropdown extends Component {
         targetAttachment={targetAttachment}
         offset={offset}
       >
-        {this.trigger}
+        {this.renderTrigger()}
         {this.renderContent()}
       </TetherComponent>
     );
