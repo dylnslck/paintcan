@@ -17,6 +17,7 @@ const Button = ({
   onClick,
   onMouseEnter,
   onMouseLeave,
+  onMouseOver,
 }) => {
   const base = outline ? styles[`${color}-outline`] : styles[color];
 
@@ -25,6 +26,7 @@ const Button = ({
     onClick,
     onMouseEnter,
     onMouseLeave,
+    onMouseOver,
     className: cx(base, styles[size], {
       [styles.circle]: circle,
       [styles.loading]: loading,

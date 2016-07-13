@@ -3,6 +3,55 @@
 $border-radius: 0.25em;
 $tooltip-margin: 2px;
 
+// https://css-tricks.com/snippets/sass/opposite-direction-function/
+@function opposite-direction($directions) {
+  $opposite-directions: ();
+  $direction-map: (
+    'top': 'bottom',
+    'right': 'left',
+    'bottom': 'top',
+    'left': 'right',
+    'center': 'center',
+    'ltr': 'rtl',
+    'rtl': 'ltr'
+  );
+
+  @each $direction in $directions {
+    $direction: to-lower-case($direction);
+
+    @if map-has-key($direction-map, $direction) {
+      $opposite-directions: append($opposite-directions, unquote(map-get($direction-map, $direction)));
+    } @else {
+      @warn "No opposite direction can be found for `#{$direction}`. Direction omitted.";
+    }
+  }
+
+  @return $opposite-directions;
+}
+
+// https://css-tricks.com/snippets/sass/css-triangle-mixin/
+@mixin triangle($direction, $color: black, $size: 1em) {
+  @if not index(top right bottom left, $direction) {
+    @error "Direction must be either `top`, `right`, `bottom` or `left`.";
+  }
+
+  width: 0;
+  height: 0;
+  content: '';
+  z-index: 2;
+
+  border-#{opposite-direction($direction)}: ($size) solid $color;
+  $perpendicular-borders: $size solid transparent;
+
+  @if $direction == top or $direction == bottom {
+    border-left:   $perpendicular-borders;
+    border-right:  $perpendicular-borders;
+  } @else if $direction == right or $direction == left {
+    border-bottom: $perpendicular-borders;
+    border-top:    $perpendicular-borders;
+  }
+}
+
 .tooltip {
   position: relative;
   border-radius: $border-radius;
@@ -12,6 +61,54 @@ $tooltip-margin: 2px;
   padding: 0.5rem;
   font-size: 0.8rem;
   z-index: 1100;
+}
+
+.bottom-center {
+  composes: tooltip;
+
+  &:before {
+    @include triangle('bottom', $dark, 0.5em);
+    position: absolute;
+    left: 30%;
+    bottom: 0;
+    transform: translateY(99%);
+  }
+}
+
+.top-center {
+  composes: tooltip;
+
+  &:before {
+    @include triangle('top', $dark, 0.5em);
+    position: absolute;
+    right: 30%;
+    top: 0;
+    transform: translateY(-99%);
+  }
+}
+
+.middle-right {
+  composes: tooltip;
+
+  &:before {
+    @include triangle('right', $dark, 0.5em);
+    position: absolute;
+    right: 0;
+    bottom: 50%;
+    transform: translateY(50%) translateX(99%);
+  }
+}
+
+.middle-left {
+  composes: tooltip;
+
+  &:before {
+    @include triangle('left', $dark, 0.5em);
+    position: absolute;
+    left: 0;
+    bottom: 50%;
+    transform: translateY(50%) translateX(-99%);
+  }
 }
 
 .popover {

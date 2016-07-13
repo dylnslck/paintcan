@@ -1,34 +1,43 @@
 /* eslint-disable no-alert */
 import React from 'react';
-import Button from '../../src/buttons/Button';
-import { Dropdown, Popover, Tooltip } from '../../src/tethers';
-import { Content, Trigger } from '../../src/utils';
+import { Icon } from 'react-fa';
+import {
+  Button,
+  ButtonGroup,
+  Card,
+  Col,
+  Content,
+  Container,
+  Dropdown,
+  Popover,
+  Row,
+  Tooltip,
+  Trigger,
+} from '../../src';
 
 const TethersDemo = () => (
-  <div style={{ padding: '2rem' }}>
-    <h1>Hovers</h1>
-    <Tooltip text="A tooltip man!" attachment="bottom center">
-      <Button>Tooltip</Button>
-    </Tooltip>
-    <Popover attachment="bottom center">
-      <Trigger>
-        <Button>Popover</Button>
-      </Trigger>
-      <Content>
-        <p>I am a big popover</p>
-        <Button color="primary" onClick={() => alert('hello!')}>Click me</Button>
-      </Content>
-    </Popover>
-    <Dropdown>
-      <Trigger>
-        <Button>Dropdown</Button>
-      </Trigger>
-      <Content>
-        <p>I am a dropdown yo</p>
-        <Button color="primary" onClick={() => alert('hello!')}>Click me</Button>
-      </Content>
-    </Dropdown>
-  </div>
+  <Container>
+    <Row>
+      <Col>
+        <h2>Tethers</h2>
+        <hr></hr>
+        <ButtonGroup spaced>
+          <Tooltip text="Some tooltip text">
+            <Button>Top</Button>
+          </Tooltip>
+          <Tooltip text="Some tooltip text" placement="left">
+            <Button>Left</Button>
+          </Tooltip>
+          <Tooltip text="Some tooltip text" placement="right">
+            <Button>Right</Button>
+          </Tooltip>
+          <Tooltip text="Some tooltip text" placement="bottom">
+            <Button>Bottom</Button>
+          </Tooltip>
+        </ButtonGroup>
+      </Col>
+    </Row>
+  </Container>
 );
 
 export default TethersDemo;
