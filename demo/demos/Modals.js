@@ -23,12 +23,16 @@ const ModalDemo = () => (
         <BasicModal title="Basic Modal">
           <p>this is a basic modal</p>
           <Tooltip text="A tooltip man!" attachment="bottom center">
-            <Button>Tooltip</Button>
+            <Trigger>
+              <Button>Tooltip</Button>
+            </Trigger>
+            <Content>
+              <div>i am a tooltip</div>
+            </Content>
           </Tooltip>
         </BasicModal>
       </Content>
     </Modal>
-
   </div>
 );
 

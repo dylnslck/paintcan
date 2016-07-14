@@ -1,4 +1,4 @@
-@import "../styles/colors";
+@import '../styles/colors';
 
 $border-radius: 0.25em;
 $tooltip-margin: 2px;
@@ -50,73 +50,4 @@ $tooltip-margin: 2px;
     border-bottom: $perpendicular-borders;
     border-top:    $perpendicular-borders;
   }
-}
-
-.tooltip {
-  position: relative;
-  border-radius: $border-radius;
-  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.20); // TODO make global somewhere
-  background: $dark;
-  color: #FFF;
-  padding: 0.5rem;
-  font-size: 0.8rem;
-  z-index: 1100;
-}
-
-.bottom-center {
-  composes: tooltip;
-
-  &:before {
-    @include triangle('bottom', $dark, 0.5em);
-    position: absolute;
-    left: 30%;
-    bottom: 0;
-    transform: translateY(99%);
-  }
-}
-
-.top-center {
-  composes: tooltip;
-
-  &:before {
-    @include triangle('top', $dark, 0.5em);
-    position: absolute;
-    right: 30%;
-    top: 0;
-    transform: translateY(-99%);
-  }
-}
-
-.middle-right {
-  composes: tooltip;
-
-  &:before {
-    @include triangle('right', $dark, 0.5em);
-    position: absolute;
-    right: 0;
-    bottom: 50%;
-    transform: translateY(50%) translateX(99%);
-  }
-}
-
-.middle-left {
-  composes: tooltip;
-
-  &:before {
-    @include triangle('left', $dark, 0.5em);
-    position: absolute;
-    left: 0;
-    bottom: 50%;
-    transform: translateY(50%) translateX(-99%);
-  }
-}
-
-.popover {
-  color: $dark;
-  position: relative;
-  border-radius: $border-radius;
-  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.20); // TODO make global somewhere
-  background: white;
-  padding: 1rem;
-  z-index: 1100;
 }

@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes, cloneElement } from 'react';
 
 class Content extends Component {
   static propTypes = {
@@ -6,11 +6,15 @@ class Content extends Component {
   }
 
   render() {
-    const { children } = this.props;
+    const { children, ...options } = this.props;
 
-    return Array.isArray(children)
+    const content = Array.isArray(children)
       ? <div>{children}</div>
       : children;
+
+    const cloned = cloneElement(content, { ...options });
+
+    return cloned;
   }
 }
 
