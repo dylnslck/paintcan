@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { Motion, spring } from 'react-motion';
-import { Icon } from 'react-fa';
 import cx from 'classnames';
 import Card from '../cards/Card';
 import styles from './styles.scss';
@@ -21,7 +20,7 @@ const BasicModal = ({ title, size, children }, { onCloseModal }) => (
           <div className={styles.header}>
             {title}
             <span className={styles.close} onClick={onCloseModal}>
-              <Icon name="times" />
+              &times;
             </span>
           </div>
           <div className={styles.body}>

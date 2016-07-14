@@ -1,5 +1,3 @@
-import 'normalize.css';
-
 export { Backdrop } from './backdrops';
 export { Button, ButtonGroup } from './buttons';
 export { Card } from './cards';

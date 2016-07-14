@@ -1,4 +1,5 @@
 import 'highlight.js/styles/default.css';
+import 'normalize.css';
 import './styles/demo.scss';
 import './styles/utils.scss';
 
