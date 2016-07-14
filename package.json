@@ -1,5 +1,5 @@
 {
-  "name": "sandbox",
+  "name": "paintcan",
   "version": "0.0.1",
   "description": "Minimal React UI framework.",
   "main": "src/index.js",
