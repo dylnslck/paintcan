@@ -9,10 +9,10 @@ const GridDemo = () => (
     <Layout>
       <Container fluid>
         <Row full align={{ xs: 'middle center' }}>
-          <Col sizes={{ xs: 12, lg: 6 }}>
+          <Col size={{ xs: 12, lg: 6 }}>
             I am col1
           </Col>
-          <Col sizes={{ xs: 12, lg: 6 }}>
+          <Col size={{ xs: 12, lg: 6 }}>
             I am col2
           </Col>
         </Row>

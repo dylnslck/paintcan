@@ -2,20 +2,20 @@ import React, { PropTypes } from 'react';
 import cx from 'classnames';
 import styles from './styles.scss';
 
-const Col = ({ full, sizes, offsets, className, style, children }) => {
-  const mapSizesToClassName = () =>
-    Object.keys(sizes).map(size => `col-${size}-${sizes[size]}`);
+const Col = ({ full, size, offset, className, style, children }) => {
+  const mapSizeToClassName = () =>
+    Object.keys(size).map(s => `col-${s}-${size[s]}`);
 
-  const mapOffsetsToClassName = () =>
-    Object.keys(offsets).map(offset => `col-${offset}-offset-${offsets[offset]}`);
+  const mapOffsetToClassName = () =>
+    Object.keys(offset).map(o => `col-${o}-offset-${offset[o]}`);
 
   // TODO: write validation function to ensure 'sizes' is a valid object
   return (
     <div
       style={style}
       className={cx(
-        mapOffsetsToClassName(),
-        mapSizesToClassName(),
+        mapOffsetToClassName(),
+        mapSizeToClassName(),
         { [styles.full]: full },
         className,
       )}
@@ -27,8 +27,8 @@ const Col = ({ full, sizes, offsets, className, style, children }) => {
 
 Col.propTypes = {
   full: PropTypes.bool,
-  offsets: PropTypes.object,
-  sizes: PropTypes.object, // TODO: super important shape validation
+  offset: PropTypes.object,
+  size: PropTypes.object, // TODO: super important shape validation
   className: PropTypes.string,
   style: PropTypes.string,
   children: PropTypes.any, // TODO: prop validation (only col?)
@@ -36,8 +36,8 @@ Col.propTypes = {
 
 Col.defaultProps = {
   full: false,
-  offsets: {},
-  sizes: {
+  offset: {},
+  size: {
     xs: 12,
   },
 };
