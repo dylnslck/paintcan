@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
 import styles from './styles.scss';
+import { mapAlignmentToClassName, mapDistributionToClassName } from './utils';
 
 const Row = ({
   full,
@@ -10,18 +11,13 @@ const Row = ({
   children,
   className,
 }) => {
-  const mapAlignmentsToClassNames = () =>
-    Object.keys(align).map(alignment =>
-      align[alignment].split(' ').map(a => `${a}-${alignment}`).join(' '));
-
-  const mapDistributionsToClassNames = () =>
-    Object.keys(distribute).map(distribution =>
-      `${distribute[distribution]}-${distribution}`);
+  const alignmentClassName = mapAlignmentToClassName(align);
+  const distributionClassName = mapDistributionToClassName(distribute);
 
   const classNames = cx(
     className,
-    mapAlignmentsToClassNames(),
-    mapDistributionsToClassNames(),
+    alignmentClassName,
+    distributionClassName,
     'row',
     {
       reverse,

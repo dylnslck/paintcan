@@ -1,22 +1,39 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
 import styles from './styles.scss';
+import {
+  mapSizeToClassName,
+  mapOffsetToClassName,
+  mapAlignmentToClassName,
+  mapDistributionToClassName,
+} from './utils';
 
-const Col = ({ full, size, offset, className, style, children }) => {
-  const mapSizeToClassName = () =>
-    Object.keys(size).map(s => `col-${s}-${size[s]}`);
-
-  const mapOffsetToClassName = () =>
-    Object.keys(offset).map(o => `col-${o}-offset-${offset[o]}`);
+const Col = ({
+  full,
+  size,
+  offset,
+  align,
+  distribute,
+  className,
+  style,
+  children,
+}) => {
+  const offsetClassName = mapOffsetToClassName(offset);
+  const sizeClassName = mapSizeToClassName(size);
+  const alignmentClassName = mapAlignmentToClassName(align);
+  const distributionClassName = mapDistributionToClassName(distribute);
+  const fullClassName = { [styles.full]: full };
 
   // TODO: write validation function to ensure 'sizes' is a valid object
   return (
     <div
       style={style}
       className={cx(
-        mapOffsetToClassName(),
-        mapSizeToClassName(),
-        { [styles.full]: full },
+        fullClassName,
+        distributionClassName,
+        alignmentClassName,
+        offsetClassName,
+        sizeClassName,
         className,
       )}
     >
@@ -28,6 +45,8 @@ const Col = ({ full, size, offset, className, style, children }) => {
 Col.propTypes = {
   full: PropTypes.bool,
   offset: PropTypes.object,
+  align: PropTypes.object,
+  distribute: PropTypes.object,
   size: PropTypes.object, // TODO: super important shape validation
   className: PropTypes.string,
   style: PropTypes.string,
