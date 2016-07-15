@@ -16,6 +16,14 @@ const GridDemo = () => (
             I am col2
           </Col>
         </Row>
+        <Row align={{ xs: 'middle' }}>
+          <Col size={{ xs: 4 }} align={{ xs: 'start' }}>
+            Left
+          </Col>
+          <Col size={{ xs: 8 }} align={{ xs: 'end' }}>
+            Right
+          </Col>
+        </Row>
       </Container>
     </Layout>
   </div>

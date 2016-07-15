@@ -56,6 +56,8 @@ Col.propTypes = {
 Col.defaultProps = {
   full: false,
   offset: {},
+  align: {},
+  distribute: {},
   size: {
     xs: 12,
   },
