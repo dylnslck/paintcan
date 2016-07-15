@@ -34,7 +34,7 @@ const mapAttachmentToOffset = (attachment) => {
   }
 };
 
-const Dropdown = ({ placement, children }) => {
+const Dropdown = ({ placement, children, disableTransition }) => {
   const attachment = mapPlacementToAttachment(placement);
   const targetAttachment = mapPlacementToTargetAttachment(placement);
   const offset = mapAttachmentToOffset(attachment);
@@ -45,6 +45,7 @@ const Dropdown = ({ placement, children }) => {
       contentClassName={className}
       attachment={attachment}
       targetAttachment={targetAttachment}
+      disableTransition={disableTransition}
       offset={offset}
     >
       {children}
@@ -54,11 +55,13 @@ const Dropdown = ({ placement, children }) => {
 
 Dropdown.propTypes = {
   placement: PropTypes.string,
+  disableTransition: PropTypes.bool,
   children: PropTypes.any,
 };
 
 Dropdown.defaultProps = {
-  placement: 'top',
+  placement: 'bottom',
+  disableTransition: true,
 };
 
 export default Dropdown;

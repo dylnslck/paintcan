@@ -22,7 +22,7 @@ const mapPlacementToTargetAttachment = (placement) => {
   }
 };
 
-const Popover = ({ placement, children }) => {
+const Popover = ({ placement, children, disableTransition }) => {
   const attachment = mapPlacementToAttachment(placement);
   const targetAttachment = mapPlacementToTargetAttachment(placement);
   const className = styles[attachment.split(' ').join('-')];
@@ -32,6 +32,7 @@ const Popover = ({ placement, children }) => {
       contentClassName={className}
       attachment={attachment}
       targetAttachment={targetAttachment}
+      disableTransition={disableTransition}
       showTetherOn="enterTrigger"
       hideTetherOn="leaveContent"
     >
@@ -43,10 +44,12 @@ const Popover = ({ placement, children }) => {
 Popover.propTypes = {
   placement: PropTypes.string,
   children: PropTypes.any,
+  disableTransition: PropTypes.bool,
 };
 
 Popover.defaultProps = {
   placement: 'top',
+  disableTransition: true,
 };
 
 export default Popover;

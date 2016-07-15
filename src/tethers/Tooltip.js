@@ -34,7 +34,7 @@ const mapAttachmentToOffset = (attachment) => {
   }
 };
 
-const Tooltip = ({ placement, children }) => {
+const Tooltip = ({ placement, children, disableTransition }) => {
   const attachment = mapPlacementToAttachment(placement);
   const targetAttachment = mapPlacementToTargetAttachment(placement);
   const offset = mapAttachmentToOffset(attachment);
@@ -45,6 +45,7 @@ const Tooltip = ({ placement, children }) => {
       contentClassName={className}
       attachment={attachment}
       targetAttachment={targetAttachment}
+      disableTransition={disableTransition}
       offset={offset}
       showTetherOn="enterTrigger"
       hideTetherOn="leaveTrigger"
@@ -57,10 +58,12 @@ const Tooltip = ({ placement, children }) => {
 Tooltip.propTypes = {
   placement: PropTypes.string,
   children: PropTypes.any,
+  disableTransition: PropTypes.bool,
 };
 
 Tooltip.defaultProps = {
   placement: 'top',
+  disableTransition: true,
 };
 
 export default Tooltip;
