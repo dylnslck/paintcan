@@ -18,10 +18,12 @@ const Button = ({
   onMouseEnter,
   onMouseLeave,
   onMouseOver,
+  style,
 }) => {
   const base = outline ? styles[`${color}-outline`] : styles[color];
 
   const props = {
+    style,
     disabled,
     onClick,
     onMouseEnter,
@@ -56,6 +58,7 @@ Button.propTypes = {
   size: PropTypes.string,
   icon: PropTypes.any, // TODO: add validation
   tag: PropTypes.string,
+  style: PropTypes.object,
   children: PropTypes.any,
   onClick: PropTypes.func,
 };
