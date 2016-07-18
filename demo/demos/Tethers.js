@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
-import React from 'react';
-import { Icon } from 'react-fa';
+import React, { PropTypes } from 'react';
+
 import {
   Button,
   ButtonGroup,
@@ -8,13 +8,108 @@ import {
   Col,
   Content,
   Container,
-  Dropdown,
-  Popover,
   Row,
   Tether,
-  Tooltip,
   Trigger,
 } from '../../src';
+
+const ClickTrigger = ({ children }, { toggleTether, isOpen }) => (
+  <Button onClick={toggleTether} active={isOpen}>
+    {children}
+  </Button>
+);
+
+ClickTrigger.propTypes = {
+  children: PropTypes.any,
+};
+
+ClickTrigger.contextTypes = {
+  toggleTether: PropTypes.func,
+  isOpen: PropTypes.bool,
+};
+
+const TooltipTrigger = ({ children }, { showTether, hideTether, isOpen }) => (
+  <Button onMouseEnter={showTether} onMouseLeave={hideTether} active={isOpen}>
+    {children}
+  </Button>
+);
+
+TooltipTrigger.propTypes = {
+  children: PropTypes.any,
+};
+
+TooltipTrigger.contextTypes = {
+  showTether: PropTypes.func,
+  hideTether: PropTypes.func,
+  isOpen: PropTypes.bool,
+};
+
+const PopoverTrigger = ({
+  children,
+}, {
+  showTether,
+  hideTether,
+  contentNode,
+  isOpen,
+}) => {
+  const handleTriggerLeave = (e) => {
+    const { relatedTarget } = e;
+
+    const shouldHideTether = (
+      contentNode !== relatedTarget &&
+      !contentNode.contains(relatedTarget)
+    );
+
+    if (shouldHideTether) hideTether();
+  };
+
+  return (
+    <Button onMouseEnter={showTether} onMouseLeave={handleTriggerLeave} active={isOpen}>
+      {children}
+    </Button>
+  );
+};
+
+const PopoverContent = ({ children }, { hideTether, triggerNode }) => {
+  const handleContentLeave = (e) => {
+    const { relatedTarget } = e;
+
+    const shouldHideTether = (
+      triggerNode !== relatedTarget &&
+      !triggerNode.contains(relatedTarget)
+    );
+
+    if (shouldHideTether) hideTether();
+  };
+
+  return (
+    <Card onMouseLeave={handleContentLeave}>
+      {children}
+    </Card>
+  );
+};
+
+PopoverTrigger.propTypes = {
+  children: PropTypes.any,
+};
+
+PopoverTrigger.contextTypes = {
+  isOpen: PropTypes.bool,
+  triggerNode: PropTypes.object,
+  contentNode: PropTypes.object,
+  showTether: PropTypes.func,
+  hideTether: PropTypes.func,
+};
+
+PopoverContent.propTypes = {
+  children: PropTypes.any,
+};
+
+PopoverContent.contextTypes = {
+  isOpen: PropTypes.bool,
+  triggerNode: PropTypes.object,
+  hideTether: PropTypes.func,
+};
 
 const TethersDemo = () => (
   <Container>
@@ -24,19 +119,23 @@ const TethersDemo = () => (
         <hr></hr>
         <p>General tethers</p>
         <ButtonGroup spaced>
+          <Tether leaveOnDocumentClick>
+            <Trigger>
+              <ClickTrigger>
+                Tether on click
+              </ClickTrigger>
+            </Trigger>
+            <Content>
+              <Card>
+                This should hide when you click outside of the box or on the button
+              </Card>
+            </Content>
+          </Tether>
           <Tether>
             <Trigger>
-              <Button>Tether on click</Button>
-            </Trigger>
-            <Content>
-              <Card>
-                This should hide when you click outside of the box or on the button
-              </Card>
-            </Content>
-          </Tether>
-          <Tether showTetherOn="enterTrigger" hideTetherOn="leaveTrigger">
-            <Trigger>
-              <Button>Tether on hover</Button>
+              <TooltipTrigger>
+                Tether on hover
+              </TooltipTrigger>
             </Trigger>
             <Content>
               <Card>
@@ -44,167 +143,18 @@ const TethersDemo = () => (
               </Card>
             </Content>
           </Tether>
-          <Tether showTetherOn="enterTrigger" hideTetherOn="leaveContent">
+          <Tether>
             <Trigger>
-              <Button>Tether on hover</Button>
+              <PopoverTrigger>
+                Tether on hover
+              </PopoverTrigger>
             </Trigger>
             <Content>
-              <Card>
+              <PopoverContent>
                 This should hide when your mouse leaves the content
-              </Card>
+              </PopoverContent>
             </Content>
           </Tether>
-        </ButtonGroup>
-        <p>Advanced tethers</p>
-        <ButtonGroup spaced>
-          <Tether
-            attachment="middle left"
-            targetAttachment="middle right"
-          >
-            <Trigger>
-              <Button>Right drodown</Button>
-            </Trigger>
-            <Content>
-              <Card>
-                This should hide when you click outside of the box or on the button
-              </Card>
-            </Content>
-          </Tether>
-          <Tether
-            showTetherOn="enterTrigger"
-            hideTetherOn="leaveTrigger"
-            attachment="middle right"
-            targetAttachment="middle left"
-          >
-            <Trigger>
-              <Button>Tether on hover</Button>
-            </Trigger>
-            <Content>
-              <Card>
-                This should hide when your mouse leaves the trigger
-              </Card>
-            </Content>
-          </Tether>
-          <Tether
-            showTetherOn="enterTrigger"
-            hideTetherOn="leaveContent"
-            attachment="middle left"
-            targetAttachment="middle right"
-          >
-            <Trigger>
-              <Button>Tether on hover</Button>
-            </Trigger>
-            <Content>
-              <Card>
-                This should hide when your mouse leaves the content
-              </Card>
-            </Content>
-          </Tether>
-        </ButtonGroup>
-        <p>Tooltips</p>
-        <ButtonGroup spaced>
-          <Tooltip>
-            <Trigger>
-              <Button>Top (default)</Button>
-            </Trigger>
-            <Content>
-              <div>i am a tooltip</div>
-            </Content>
-          </Tooltip>
-          <Tooltip placement="left">
-            <Trigger>
-              <Button>Left</Button>
-            </Trigger>
-            <Content>
-              <div>i am a tooltip</div>
-            </Content>
-          </Tooltip>
-          <Tooltip placement="right">
-            <Trigger>
-              <Button>Right</Button>
-            </Trigger>
-            <Content>
-              <div>i am a tooltip</div>
-            </Content>
-          </Tooltip>
-          <Tooltip placement="bottom">
-            <Trigger>
-              <Button>Bottom</Button>
-            </Trigger>
-            <Content>
-              <div>i am a tooltip</div>
-            </Content>
-          </Tooltip>
-        </ButtonGroup>
-        <p>Popovers</p>
-        <ButtonGroup spaced>
-          <Popover>
-            <Trigger>
-              <Button>Top (default)</Button>
-            </Trigger>
-            <Content>
-              <div>i am a tooltip</div>
-            </Content>
-          </Popover>
-          <Popover placement="left">
-            <Trigger>
-              <Button>Left</Button>
-            </Trigger>
-            <Content>
-              <div>i am a popover</div>
-            </Content>
-          </Popover>
-          <Popover placement="right">
-            <Trigger>
-              <Button>Right</Button>
-            </Trigger>
-            <Content>
-              <div>i am a popover</div>
-            </Content>
-          </Popover>
-          <Popover placement="bottom">
-            <Trigger>
-              <Button>Bottom</Button>
-            </Trigger>
-            <Content>
-              <div>i am a popover</div>
-            </Content>
-          </Popover>
-        </ButtonGroup>
-        <p>Dropdowns</p>
-        <ButtonGroup spaced>
-          <Dropdown>
-            <Trigger>
-              <Button>Top (default)</Button>
-            </Trigger>
-            <Content>
-              <div>i am a dropdown</div>
-            </Content>
-          </Dropdown>
-          <Dropdown placement="left">
-            <Trigger>
-              <Button>Left</Button>
-            </Trigger>
-            <Content>
-              <div>i am a dropdown</div>
-            </Content>
-          </Dropdown>
-          <Dropdown placement="right">
-            <Trigger>
-              <Button>Right</Button>
-            </Trigger>
-            <Content>
-              <div>i am a dropdown</div>
-            </Content>
-          </Dropdown>
-          <Dropdown placement="bottom">
-            <Trigger>
-              <Button>Bottom</Button>
-            </Trigger>
-            <Content>
-              <div>i am a dropdown</div>
-            </Content>
-          </Dropdown>
         </ButtonGroup>
       </Col>
     </Row>

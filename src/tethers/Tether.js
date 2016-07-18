@@ -41,24 +41,12 @@ TetherTransition.propTypes = {
 };
 
 class Tether extends Component {
-  static allowedShowTetherEvents = [
-    'click',
-    'enterTrigger',
-  ]
-
-  static allowedHideTetherEvents = [
-    'click',
-    'leaveTrigger',
-    'leaveContent',
-  ]
-
   static propTypes = {
     attachment: PropTypes.string, // TODO: oneOf[... full list of options]
     targetAttachment: PropTypes.string, // TODO: oneOf[... full list of options]
     offset: PropTypes.string,
     children: PropTypes.any, // TODO: proper validation (single element)
-    hideTetherOn: PropTypes.string, // TODO: proper validation (one of allowedHideTetherEvents)
-    showTetherOn: PropTypes.string, // TODO: proper validation (one of allowedShowTetherEvents)
+    leaveOnDocumentClick: PropTypes.bool,
     arrowColor: PropTypes.string,
     springProps: PropTypes.object,
     contentClassName: PropTypes.string,
@@ -69,8 +57,7 @@ class Tether extends Component {
     attachment: 'top left',
     targetAttachment: 'bottom left',
     offset: '0 0',
-    showTetherOn: 'click',
-    hideTetherOn: 'click',
+    leaveOnDocumentClick: false,
     disableTransition: true,
     springProps: {
       enter: {
@@ -84,41 +71,58 @@ class Tether extends Component {
     },
   }
 
-  constructor(props) {
-    super(props);
+  static childContextTypes = {
+    isOpen: PropTypes.bool,
+    triggerNode: PropTypes.object,
+    contentNode: PropTypes.object,
+    showTether: PropTypes.func,
+    hideTether: PropTypes.func,
+    toggleTether: PropTypes.func,
+  }
 
-    this.state = { isOpen: true };
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = { isOpen: false, triggerNode: null, contentNode: null };
 
     this.showTether = debounce(this.showTether.bind(this));
     this.hideTether = debounce(this.hideTether.bind(this));
-
     this.toggleTether = this.toggleTether.bind(this);
-    this.handleHideEvents = this.handleHideEvents.bind(this);
-    this.handleShowEvents = this.handleShowEvents.bind(this);
+    this.handleDocumentClick = this.handleDocumentClick.bind(this);
+  }
+
+  getChildContext() {
+    return {
+      isOpen: this.state.isOpen,
+      triggerNode: this.state.triggerNode,
+      contentNode: this.state.contentNode,
+      showTether: this.showTether,
+      hideTether: this.hideTether,
+      toggleTether: this.toggleTether,
+    };
   }
 
   componentWillMount() {
-    document.addEventListener('click', this.handleHideEvents, false);
+    if (this.props.leaveOnDocumentClick) {
+      document.addEventListener('click', this.handleDocumentClick, false);
+    }
+
     this.setupTriggerAndContent();
   }
 
-  componentDidMount() {
-    // FIXME: super hacky, need fix
-    /* eslint-disable react/no-did-mount-set-state */
-    setTimeout(this.setState({ isOpen: false }), 0);
-    this.didMount = true;
-  }
-
   componentWillUnmount() {
-    document.removeEventListener('click', this.handleHideEvents);
+    if (this.props.leaveOnDocumentClick) {
+      document.removeEventListener('click', this.handleDocumentClick);
+    }
   }
 
   setupTriggerAndContent() {
     const { children } = this.props;
 
-    const createRef = (key) => (ref) => {
-      this[key] = findDOMNode(ref);
-    };
+    const createRef = (key) => (ref) => (
+      // FIXME: this makes me very nervous
+      this.setState({ [key]: findDOMNode(ref) })
+    );
 
     Children.forEach(children, child => {
       if (child.type === Trigger) {
@@ -135,87 +139,40 @@ class Tether extends Component {
     });
   }
 
-  shouldHideTether(e, trigger, content) {
-    const { target, type, relatedTarget } = e;
-    const { hideTetherOn } = this.props;
+  shouldHideTether(e, triggerNode, contentNode) {
+    const { target, type } = e;
+    const { leaveOnDocumentClick } = this.props;
     const { isOpen } = this.state;
 
-    if (!(isOpen && content)) return false;
+    if (!isOpen) return false;
+    if (!contentNode) return false;
 
     const wasTriggerClicked = (
+      leaveOnDocumentClick &&
       type === 'click' &&
-      hideTetherOn === 'click' &&
-      (trigger === target || trigger.contains(target))
+      (triggerNode === target || triggerNode.contains(target))
     );
 
     const wasBackgroundClicked = (
+      leaveOnDocumentClick &&
       type === 'click' &&
-      hideTetherOn === 'click' &&
-      trigger !== target &&
-      !trigger.contains(target) &&
-      content !== target &&
-      !content.contains(target)
-    );
-
-    const didLeaveTrigger = (
-      type === 'mouseleave' &&
-      hideTetherOn === 'leaveTrigger' &&
-      (trigger === target || trigger.contains(target))
-    );
-
-    const didLeaveContent = (
-      type === 'mouseleave' &&
-      hideTetherOn === 'leaveContent' &&
-      content !== relatedTarget &&
-      !content.contains(relatedTarget)
+      triggerNode !== target &&
+      !triggerNode.contains(target) &&
+      contentNode !== target &&
+      !contentNode.contains(target)
     );
 
     return (
       wasTriggerClicked ||
-      wasBackgroundClicked ||
-      didLeaveTrigger ||
-      didLeaveContent
+      wasBackgroundClicked
     );
   }
 
-  shouldShowTether(e, trigger) {
-    const { target, type } = e;
-    const { showTetherOn } = this.props;
-    const { isOpen } = this.state;
+  handleDocumentClick(e) {
+    const { triggerNode, contentNode } = this.state;
 
-    if (isOpen) return false;
-
-    const wasClicked = (
-      type === 'click' &&
-      showTetherOn === 'click' &&
-      (trigger === target || trigger.contains(target))
-    );
-
-    const wasEntered = (
-      type === 'mouseover' &&
-      showTetherOn === 'enterTrigger' &&
-      (trigger === target || trigger.contains(target))
-    );
-
-    return (
-      wasClicked ||
-      wasEntered
-    );
-  }
-
-  handleHideEvents(e) {
-    const { contentNode: content, triggerNode: trigger } = this;
-
-    if (this.shouldHideTether(e, trigger, content)) {
+    if (this.shouldHideTether(e, triggerNode, contentNode)) {
       this.hideTether();
-    }
-  }
-
-  handleShowEvents(e) {
-    const { triggerNode: trigger } = this;
-
-    if (this.shouldShowTether(e, trigger)) {
-      this.showTether();
     }
   }
 
@@ -236,23 +193,14 @@ class Tether extends Component {
   }
 
   renderTrigger() {
-    return cloneElement(this.trigger, {
-      active: this.state.isOpen,
-      onClick: this.handleShowEvents,
-      onMouseOver: this.handleShowEvents,
-      onMouseLeave: this.handleHideEvents,
-    });
+    return this.trigger;
   }
 
   renderContent() {
     const { isOpen } = this.state;
-    const { hideTetherOn, contentClassName, disableTransition } = this.props;
+    const { contentClassName, disableTransition } = this.props;
     const { content } = this;
     const contentProps = {};
-
-    if (hideTetherOn === 'leaveContent') {
-      contentProps.onMouseLeave = this.hideTether;
-    }
 
     if (contentClassName) {
       contentProps.className = contentClassName;
