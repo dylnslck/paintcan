@@ -49,7 +49,7 @@ Col.propTypes = {
   distribute: PropTypes.object,
   size: PropTypes.object, // TODO: super important shape validation
   className: PropTypes.string,
-  style: PropTypes.string,
+  style: PropTypes.object,
   children: PropTypes.any, // TODO: prop validation (only col?)
 };
 
