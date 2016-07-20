@@ -1,5 +1,5 @@
-import React, { Component, unmountComponentAtNode } from 'react';
-import { render } from 'react-dom';
+import React, { Component } from 'react';
+import { render, unmountComponentAtNode } from 'react-dom';
 import { Backdrop } from '../backdrops';
 
 const withModal = (Trigger, Content) => (
