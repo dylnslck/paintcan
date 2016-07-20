@@ -5,3 +5,5 @@ export { Col, Container, Layout, Row } from './grid';
 export { BasicModal, ConfirmModal, Modal } from './modals';
 export { Dropdown, Popover, Tether, Tooltip } from './tethers';
 export { Content, Trigger } from './utils';
+
+export { withDropdown, withModal, withSelect, withTooltip } from './wrappers';

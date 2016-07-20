@@ -1,4 +1,4 @@
-import { Component, PropTypes, cloneElement } from 'react';
+import { Component, PropTypes } from 'react';
 
 class Trigger extends Component {
   static propTypes = {
@@ -6,9 +6,7 @@ class Trigger extends Component {
   }
 
   render() {
-    const { children, ...options } = this.props;
-
-    return cloneElement(children, { ...options });
+    return this.props.children;
   }
 }
 

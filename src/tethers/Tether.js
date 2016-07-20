@@ -45,8 +45,8 @@ class Tether extends Component {
     attachment: PropTypes.string, // TODO: oneOf[... full list of options]
     targetAttachment: PropTypes.string, // TODO: oneOf[... full list of options]
     offset: PropTypes.string,
-    children: PropTypes.any, // TODO: proper validation (single element)
-    leaveOnDocumentClick: PropTypes.bool,
+    children: PropTypes.any, // TODO: proper validation (one Trigger and one Content)
+    hideOnDocumentClick: PropTypes.bool,
     arrowColor: PropTypes.string,
     springProps: PropTypes.object,
     contentClassName: PropTypes.string,
@@ -57,7 +57,7 @@ class Tether extends Component {
     attachment: 'top left',
     targetAttachment: 'bottom left',
     offset: '0 0',
-    leaveOnDocumentClick: false,
+    hideOnDocumentClick: false,
     disableTransition: true,
     springProps: {
       enter: {
@@ -73,6 +73,8 @@ class Tether extends Component {
 
   static childContextTypes = {
     isOpen: PropTypes.bool,
+    trigger: PropTypes.object,
+    content: PropTypes.object,
     triggerNode: PropTypes.object,
     contentNode: PropTypes.object,
     showTether: PropTypes.func,
@@ -89,13 +91,16 @@ class Tether extends Component {
     this.hideTether = debounce(this.hideTether.bind(this));
     this.toggleTether = this.toggleTether.bind(this);
     this.handleDocumentClick = this.handleDocumentClick.bind(this);
+    this.setupTriggerAndContent = this.setupTriggerAndContent.bind(this);
   }
 
   getChildContext() {
     return {
       isOpen: this.state.isOpen,
-      triggerNode: this.state.triggerNode,
-      contentNode: this.state.contentNode,
+      trigger: this.trigger,
+      content: this.content,
+      triggerNode: this.triggerNode,
+      contentNode: this.contentNode,
       showTether: this.showTether,
       hideTether: this.hideTether,
       toggleTether: this.toggleTether,
@@ -103,7 +108,7 @@ class Tether extends Component {
   }
 
   componentWillMount() {
-    if (this.props.leaveOnDocumentClick) {
+    if (this.props.hideOnDocumentClick) {
       document.addEventListener('click', this.handleDocumentClick, false);
     }
 
@@ -111,7 +116,7 @@ class Tether extends Component {
   }
 
   componentWillUnmount() {
-    if (this.props.leaveOnDocumentClick) {
+    if (this.props.hideOnDocumentClick) {
       document.removeEventListener('click', this.handleDocumentClick);
     }
   }
@@ -119,10 +124,10 @@ class Tether extends Component {
   setupTriggerAndContent() {
     const { children } = this.props;
 
-    const createRef = (key) => (ref) => (
+    const createRef = (key) => (ref) => {
       // FIXME: this makes me very nervous
-      this.setState({ [key]: findDOMNode(ref) })
-    );
+      if (ref) this.setState({ [key]: findDOMNode(ref) });
+    };
 
     Children.forEach(children, child => {
       if (child.type === Trigger) {
@@ -141,20 +146,20 @@ class Tether extends Component {
 
   shouldHideTether(e, triggerNode, contentNode) {
     const { target, type } = e;
-    const { leaveOnDocumentClick } = this.props;
+    const { hideOnDocumentClick } = this.props;
     const { isOpen } = this.state;
 
     if (!isOpen) return false;
     if (!contentNode) return false;
 
     const wasTriggerClicked = (
-      leaveOnDocumentClick &&
+      hideOnDocumentClick &&
       type === 'click' &&
       (triggerNode === target || triggerNode.contains(target))
     );
 
     const wasBackgroundClicked = (
-      leaveOnDocumentClick &&
+      hideOnDocumentClick &&
       type === 'click' &&
       triggerNode !== target &&
       !triggerNode.contains(target) &&
@@ -192,28 +197,8 @@ class Tether extends Component {
       : this.showTether();
   }
 
-  renderTrigger() {
-    return this.trigger;
-  }
-
-  renderContent() {
-    const { isOpen } = this.state;
-    const { contentClassName, disableTransition } = this.props;
-    const { content } = this;
-    const contentProps = {};
-
-    if (contentClassName) {
-      contentProps.className = contentClassName;
-    }
-
-    const clonedContent = <div>{isOpen ? cloneElement(content, contentProps) : null}</div>;
-    const withTransition = <TetherTransition>{clonedContent}</TetherTransition>;
-
-    return disableTransition ? clonedContent : withTransition;
-  }
-
   render() {
-    const { attachment, targetAttachment, offset } = this.props;
+    const { attachment, targetAttachment, offset, children } = this.props;
 
     return (
       <TetherComponent
@@ -221,8 +206,7 @@ class Tether extends Component {
         targetAttachment={targetAttachment}
         offset={offset}
       >
-        {this.renderTrigger()}
-        {this.renderContent()}
+        {children}
       </TetherComponent>
     );
   }

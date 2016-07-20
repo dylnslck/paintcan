@@ -1,10 +1,7 @@
 import React from 'react';
 import { Icon } from 'react-fa';
 import Highlight from 'react-highlight';
-
-
-import { Button, ButtonGroup, Col, Container, Row } from '../../src';
-
+import { Button, Col, Container, Row } from '../../src';
 
 const ButtonDemo = () => (
   <Container>
@@ -165,47 +162,6 @@ const ButtonDemo = () => (
             <Highlight>{'<Button block>Default<Button>'}</Highlight>
           </Col>
         </Row>
-        <h1>Button groups</h1>
-        <p>Grouped</p>
-        <pre>const ButtonGroup = (
-          <br></br>
-          &nbsp;&nbsp;&lt;ButtonGroup&gt;
-          <br></br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&lt;Button color="secondary" circle&gt;Button&lt;/Button&gt;
-          <br></br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&lt;Button color="secondary" circle&gt;Button&lt;/Button&gt;
-          <br></br>
-          &nbsp;&nbsp;&lt;/ButtonGroup&gt;
-          <br></br>
-        );
-        </pre>
-        <ButtonGroup>
-          <Button color="secondary">Secondary</Button>
-          <Button color="primary">Primary</Button>
-          <Button color="success">Success</Button>
-          <Button color="danger">Danger</Button>
-          <Button>Default</Button>
-        </ButtonGroup>
-        <p>Spaced</p>
-        <pre>const ButtonGroup = (
-          <br></br>
-          &nbsp;&nbsp;&lt;ButtonGroup spaced&gt;
-          <br></br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&lt;Button color="secondary" circle&gt;Button&lt;/Button&gt;
-          <br></br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&lt;Button color="secondary" circle&gt;Button&lt;/Button&gt;
-          <br></br>
-          &nbsp;&nbsp;&lt;/ButtonGroup&gt;
-          <br></br>
-        );
-        </pre>
-        <ButtonGroup spaced>
-          <Button color="secondary">Secondary</Button>
-          <Button color="primary">Primary</Button>
-          <Button color="success">Success</Button>
-          <Button color="danger">Danger</Button>
-          <Button>Default</Button>
-        </ButtonGroup>
       </Col>
     </Row>
   </Container>
