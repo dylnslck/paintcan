@@ -9,7 +9,6 @@ import {
   Row,
 } from '../../src';
 
-import { Dropdown } from '../../src/tethers/Dropdown2';
 import withSelect from '../../src/wrappers/withSelect';
 
 const someItems = [{
@@ -44,11 +43,6 @@ const TethersDemo = () => (
     <Row>
       <Col>
         <p>Hello select</p>
-      </Col>
-    </Row>
-    <Row>
-      <Col>
-        <Dropdown blah="hello" />
       </Col>
     </Row>
     <Row>

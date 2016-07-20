@@ -76,7 +76,11 @@ const withDropdown = (DropdownTrigger, DropdownContent) => (
       );
 
       return (
-        <TetherComponent attachment="top left" targetAttachment="bottom left">
+        <TetherComponent
+          attachment="top left"
+          targetAttachment="bottom left"
+          style={{ zIndex: 1100 }}
+        >
           {trigger}
           {isOpen ? content : null}
         </TetherComponent>

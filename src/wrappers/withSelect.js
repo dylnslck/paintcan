@@ -80,8 +80,13 @@ const withSelect = (SelectTrigger, SelectContent) => (
         </Content>
       );
 
+      // FIXME: move zIndex to global registry somewhere
       return (
-        <TetherComponent attachment="top left" targetAttachment="bottom left">
+        <TetherComponent
+          attachment="top left"
+          targetAttachment="bottom left"
+          style={{ zIndex: 1100 }}
+        >
           {trigger}
           {isOpen ? content : null}
         </TetherComponent>

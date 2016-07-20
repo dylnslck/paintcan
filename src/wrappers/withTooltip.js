@@ -34,7 +34,11 @@ const withTooltip = (TooltipTrigger, TooltipContent) => (
       const props = { isOpen, toggleTooltip, showTooltip, hideTooltip, ...supplied };
 
       return (
-        <TetherComponent attachment="top left" targetAttachment="bottom left">
+        <TetherComponent
+          attachment="top left"
+          targetAttachment="bottom left"
+          style={{ zIndex: 1100 }}
+        >
           <TooltipTrigger {...props} />
           {isOpen ? <TooltipContent {...props} /> : null}
         </TetherComponent>

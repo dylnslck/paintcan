@@ -9,6 +9,16 @@ import {
 } from '../../src';
 
 import withModal from '../../src/wrappers/withModal';
+import withSelect from '../../src/wrappers/withSelect';
+import JobSelect from './test';
+
+const someItems = [{
+  id: '1',
+  label: 'hello',
+}, {
+  id: '2',
+  label: 'goodbye',
+}];
 
 const Modal = withModal(
   ({ openModal }) => (
@@ -19,6 +29,7 @@ const Modal = withModal(
   ({ closeModal, test }) => (
     <Card>
       <p>Hello! {test}</p>
+      <JobSelect items={someItems} />
       <Button onClick={closeModal}>
         close!
       </Button>
