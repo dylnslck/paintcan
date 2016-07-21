@@ -13,6 +13,7 @@ const Button = ({
   size,
   icon,
   tag,
+  type,
   children,
   onClick,
   onMouseEnter,
@@ -23,6 +24,7 @@ const Button = ({
   const base = outline ? styles[`${color}-outline`] : styles[color];
 
   const props = {
+    type,
     style,
     disabled,
     onClick,
@@ -59,6 +61,7 @@ Button.propTypes = {
   icon: PropTypes.any, // TODO: add validation
   tag: PropTypes.string,
   style: PropTypes.object,
+  type: PropTypes.string,
   children: PropTypes.any,
   onClick: PropTypes.func,
 };
@@ -73,6 +76,7 @@ Button.defaultProps = {
   block: false,
   size: 'md',
   tag: 'button',
+  type: 'button',
 };
 
 export default Button;

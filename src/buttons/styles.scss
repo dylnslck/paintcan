@@ -122,7 +122,7 @@ $button-height: 1em + (2 * $padding-y);
 
 .white-outline {
   composes: btn;
-  @include button-solid(#FFF, #FFF);
+  @include button-outline(#FFF, #FFF);
 }
 
 .group {
