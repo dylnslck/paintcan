@@ -111,20 +111,6 @@ $button-height: 1em + (2 * $padding-y);
   @include button-outline($red);
 }
 
-.white {
-  composes: btn;
-  @include button-solid(#FFF, $dark);
-
-  &.active {
-    @include button-solid(darken(#FFF, 10%), $dark);
-  }
-}
-
-.white-outline {
-  composes: btn;
-  @include button-outline(#FFF, #FFF);
-}
-
 .group {
   &.spaced {
     .btn { margin-right: 0.5rem; }
