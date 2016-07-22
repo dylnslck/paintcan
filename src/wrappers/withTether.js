@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import TetherComponent from 'react-tether';
 
-const withTooltip = (TooltipTrigger, TooltipContent) => (
-  class Tooltip extends Component {
+const withTether = (TooltipTrigger, TooltipContent) => (
+  class Tether extends Component {
     static propTypes = {
       attachment: PropTypes.string, // TODO: proper validation
       targetAttachment: PropTypes.string, // TODO: proper validation
@@ -59,4 +59,4 @@ const withTooltip = (TooltipTrigger, TooltipContent) => (
   }
 );
 
-export default withTooltip;
+export default withTether;

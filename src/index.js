@@ -6,4 +6,4 @@ export { BasicModal, ConfirmModal, Modal } from './modals';
 export { Dropdown, Popover, Tether, Tooltip } from './tethers';
 export { Content, Trigger } from './utils';
 
-export { withDropdown, withModal, withSelect, withTooltip } from './wrappers';
+export { withDropdown, withModal, withSelect, withTether, withTooltip } from './wrappers';
