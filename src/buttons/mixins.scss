@@ -69,7 +69,7 @@
   border-style: none;
 
   &:disabled {
-    background: lighten($background, 20%);
+    background: lighten($background, 10%);
   }
 
   &:not(.active):not([disabled]):hover {

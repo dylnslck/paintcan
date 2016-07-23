@@ -1,9 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { Backdrop } from '../backdrops';
 
 const withModal = (Trigger, Content) => (
   class Modal extends Component {
+    static propTypes = {
+      closeOnBackdropClick: PropTypes.bool,
+    }
+
     constructor(props, context) {
       super(props, context);
 
@@ -15,10 +19,12 @@ const withModal = (Trigger, Content) => (
     }
 
     openModal() {
+      document.body.style.overflowY = 'hidden';
       this.setState({ isOpen: true });
     }
 
     closeModal() {
+      document.body.style.overflowY = 'auto';
       this.setState({ isOpen: false });
     }
 
@@ -48,15 +54,14 @@ const withModal = (Trigger, Content) => (
     renderBackdrop() {
       const { isOpen } = this.state;
       const { openModal, closeModal, toggleModal, container } = this;
-      const { ...supplied } = this.props;
+      const { closeOnBackdropClick, ...supplied } = this.props;
       const props = { isOpen, openModal, closeModal, toggleModal, ...supplied };
 
-      const content = (
-        <Content {...props} />
-      );
+      const content = <Content {...props} />;
+      const handleBackdropClick = () => closeOnBackdropClick && closeModal();
 
       const backdrop = (
-        <Backdrop active={isOpen}>
+        <Backdrop active={isOpen} onClick={handleBackdropClick}>
           {content}
         </Backdrop>
       );
