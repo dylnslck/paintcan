@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
+import { Content } from '../utils';
+import { render, findDOMNode, unmountComponentAtNode } from 'react-dom';
 import { Backdrop } from '../backdrops';
 
-const withModal = (Trigger, Content) => (
+const withModal = (ModalTrigger, ModalContent) => (
   class Modal extends Component {
     static propTypes = {
       closeOnBackdropClick: PropTypes.bool,
@@ -57,17 +58,25 @@ const withModal = (Trigger, Content) => (
       const { closeOnBackdropClick, ...supplied } = this.props;
       const props = { isOpen, openModal, closeModal, toggleModal, ...supplied };
 
-      const content = <Content {...props} />;
-      const handleBackdropClick = () => closeOnBackdropClick && closeModal();
+      const createRef = (key) => (ref) => (this[key] = findDOMNode(ref));
+      const content = <ModalContent {...props} />;
+
+      const handleBackdropClick = (e) => {
+        if (!closeOnBackdropClick) return;
+
+        const { target } = e;
+        const { contentRef } = this;
+
+        if (contentRef !== target && !contentRef.contains(target)) closeModal();
+      };
 
       const backdrop = (
         <Backdrop active={isOpen} onClick={handleBackdropClick}>
-          {content}
+          <Content ref={createRef('contentRef')}>
+            {content}
+          </Content>
         </Backdrop>
       );
-
-      this.content = content;
-      this.backdrop = backdrop;
 
       render(backdrop, container);
     }
@@ -79,7 +88,7 @@ const withModal = (Trigger, Content) => (
       const props = { isOpen, openModal, closeModal, toggleModal, ...supplied };
 
       return (
-        <Trigger {...props} />
+        <ModalTrigger {...props} />
       );
     }
   }

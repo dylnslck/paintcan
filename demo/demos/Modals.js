@@ -10,14 +10,6 @@ import {
 
 import withModal from '../../src/wrappers/withModal';
 
-const someItems = [{
-  id: '1',
-  label: 'hello',
-}, {
-  id: '2',
-  label: 'goodbye',
-}];
-
 const Modal = withModal(
   ({ openModal }) => (
     <Button onClick={openModal} color="primary">
