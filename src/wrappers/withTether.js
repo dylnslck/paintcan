@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import TetherComponent from 'react-tether';
 
-const withTether = (TooltipTrigger, TooltipContent) => (
+const withTether = (TetherTrigger, TetherContent) => (
   class Tether extends Component {
     static propTypes = {
       attachment: PropTypes.string, // TODO: proper validation
@@ -19,30 +19,30 @@ const withTether = (TooltipTrigger, TooltipContent) => (
       super(props, context);
 
       this.state = { isOpen: false };
-      this.toggleTooltip = this.toggleTooltip.bind(this);
-      this.showTooltip = this.showTooltip.bind(this);
-      this.hideTooltip = this.hideTooltip.bind(this);
+      this.toggleTether = this.toggleTether.bind(this);
+      this.showTether = this.showTether.bind(this);
+      this.hideTether = this.hideTether.bind(this);
     }
 
-    showTooltip() {
+    showTether() {
       this.setState({ isOpen: true });
     }
 
-    hideTooltip() {
+    hideTether() {
       this.setState({ isOpen: false });
     }
 
-    toggleTooltip() {
+    toggleTether() {
       return this.state.isOpen
-        ? this.hideTooltip()
-        : this.showTooltip();
+        ? this.hideTether()
+        : this.showTether();
     }
 
     render() {
       const { isOpen } = this.state;
       const { attachment, targetAttachment, offset, ...supplied } = this.props;
-      const { toggleTooltip, showTooltip, hideTooltip } = this;
-      const props = { isOpen, toggleTooltip, showTooltip, hideTooltip, ...supplied };
+      const { toggleTether, showTether, hideTether } = this;
+      const props = { isOpen, toggleTether, showTether, hideTether, ...supplied };
 
       return (
         <TetherComponent
@@ -51,8 +51,8 @@ const withTether = (TooltipTrigger, TooltipContent) => (
           offset={offset}
           style={{ zIndex: 1100 }}
         >
-          <TooltipTrigger {...props} />
-          {isOpen ? <TooltipContent {...props} /> : null}
+          <TetherTrigger {...props} />
+          {isOpen ? <TetherContent {...props} /> : null}
         </TetherComponent>
       );
     }
