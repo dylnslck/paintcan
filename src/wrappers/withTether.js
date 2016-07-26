@@ -9,7 +9,7 @@ const withTether = (TooltipTrigger, TooltipContent) => (
       offset: PropTypes.string, // TODO: proper validation
     }
 
-    static defaultTypes = {
+    static defaultProps = {
       attachment: 'top left',
       targetAttachment: 'bottom left',
       offset: '0 0',
