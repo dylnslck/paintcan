@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import TetherComponent from 'react-tether';
+import { Trigger, Content } from '../utils';
 
 const withTether = (TetherTrigger, TetherContent) => (
   class Tether extends Component {
@@ -22,6 +23,9 @@ const withTether = (TetherTrigger, TetherContent) => (
       this.toggleTether = this.toggleTether.bind(this);
       this.showTether = this.showTether.bind(this);
       this.hideTether = this.hideTether.bind(this);
+      this.updateState = this.updateState.bind(this);
+      this.renderTrigger = this.renderTrigger.bind(this);
+      this.renderContent = this.renderContent.bind(this);
     }
 
     showTether() {
@@ -38,11 +42,46 @@ const withTether = (TetherTrigger, TetherContent) => (
         : this.showTether();
     }
 
+    updateState(nextState) {
+      this.setState(nextState);
+    }
+
+    renderTrigger(props) {
+      return (
+        <Trigger ref={ref => (this.triggerRef = ref)}>
+          <TetherTrigger {...props} />
+        </Trigger>
+      );
+    }
+
+    renderContent(props) {
+      if (this.state.isOpen) {
+        return (
+          <Content ref={ref => (this.contentRef = ref)}>
+            <TetherContent {...props} />
+          </Content>
+        );
+      }
+
+      return null;
+    }
+
     render() {
-      const { isOpen } = this.state;
-      const { attachment, targetAttachment, offset, ...supplied } = this.props;
-      const { toggleTether, showTether, hideTether } = this;
-      const props = { isOpen, toggleTether, showTether, hideTether, ...supplied };
+      const { toggleTether, showTether, hideTether, updateState, triggerRef, contentRef } = this;
+      const { attachment, targetAttachment, offset } = this.props;
+
+      const props = {
+        toggleTether,
+        showTether,
+        hideTether,
+        updateState,
+
+        triggerRef,
+        contentRef,
+
+        ...this.props,
+        ...this.state,
+      };
 
       return (
         <TetherComponent
@@ -51,8 +90,8 @@ const withTether = (TetherTrigger, TetherContent) => (
           offset={offset}
           style={{ zIndex: 1100 }}
         >
-          <TetherTrigger {...props} />
-          {isOpen ? <TetherContent {...props} /> : null}
+          {this.renderTrigger(props)}
+          {this.renderContent(props)}
         </TetherComponent>
       );
     }

@@ -23,6 +23,7 @@
     "classnames": "^2.2.5",
     "express": "^4.14.0",
     "flexboxgrid": "^6.3.0",
+    "fuzzy": "^0.1.1",
     "hoist-non-react-statics": "^1.2.0",
     "lodash": "^4.13.1",
     "normalize.css": "^4.2.0",
